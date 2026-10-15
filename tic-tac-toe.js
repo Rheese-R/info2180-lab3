@@ -1,6 +1,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     const squares = document.querySelectorAll("#board div");
+    const status = document.querySelector("#status");
 
     // Add the square class to each space on the board
     squares.forEach(function (square) {
@@ -12,6 +13,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // X plays first
     let currentPlayer = "X";
+
+    // All possible winning combinations
+    const winningCombinations = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    // Check whether a player has won
+    function checkWinner() {
+        for (let i = 0; i < winningCombinations.length; i++) {
+            const combination = winningCombinations[i];
+
+            const a = combination[0];
+            const b = combination[1];
+            const c = combination[2];
+
+            if (
+                gameState[a] !== "" &&
+                gameState[a] === gameState[b] &&
+                gameState[a] === gameState[c]
+            ) {
+                status.textContent =
+                    "Congratulations! " + gameState[a] + " is the Winner!";
+
+                status.classList.add("you-won");
+
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     // Add events to each square
     squares.forEach(function (square, index) {
@@ -41,11 +80,16 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Record the move
                 gameState[index] = currentPlayer;
 
-                // Switch to the other player
-                if (currentPlayer === "X") {
-                    currentPlayer = "O";
-                } else {
-                    currentPlayer = "X";
+                // Check whether the current player has won
+                const winner = checkWinner();
+
+                // Switch to the other player if nobody has won
+                if (!winner) {
+                    if (currentPlayer === "X") {
+                        currentPlayer = "O";
+                    } else {
+                        currentPlayer = "X";
+                    }
                 }
             }
         });
