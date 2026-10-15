@@ -13,8 +13,20 @@ document.addEventListener("DOMContentLoaded", function () {
     // X plays first
     let currentPlayer = "X";
 
-    // Add a click event to each square
+    // Add events to each square
     squares.forEach(function (square, index) {
+
+        // Change the style when the mouse enters the square
+        square.addEventListener("mouseover", function () {
+            square.classList.add("hover");
+        });
+
+        // Return to the original style when the mouse leaves
+        square.addEventListener("mouseout", function () {
+            square.classList.remove("hover");
+        });
+
+        // Add a click event to the square
         square.addEventListener("click", function () {
 
             // Only allow a move if the square is empty
