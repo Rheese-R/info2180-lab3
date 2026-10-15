@@ -1,2 +1,2 @@
-# info2180-lab3
-LAB 3 - Rheese-Ashley Roman
+# INFO2180 Lab 3
+This is Lab 3 for Rheese-Ashley Roman
